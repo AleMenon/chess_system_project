@@ -11,7 +11,6 @@ MAIN_CODE=application/Program.java
 #Compile and run the code (default when calling 'make')
 all: compile run
 
-
 compile: 
 	@javac -d $(BIN) -sourcepath $(SRC) $(SRC)/$(MAIN_CODE)
 
