@@ -45,7 +45,6 @@ public class UI {
 			String s = sc.nextLine();
 			char column = s.charAt(0);
 			int row = Integer.parseInt(s.substring(1));
-
 			return new ChessPosition(column, row);
 		} catch (RuntimeException e) {
 			throw new InputMismatchException("Error reading ChessPosition. Valid values are from a1 to h8.");
@@ -59,6 +58,9 @@ public class UI {
 		System.out.println();
 		System.out.println("Turn: " + chessMatch.getTurn());
 		System.out.println("Wating player: " + chessMatch.getCurrentPlayer());
+		if(chessMatch.getCheck()) {
+			System.out.println("CHECK!");
+		}
 	}
 
 	public static void printBoard(ChessPiece[][] pieces) {
@@ -71,7 +73,6 @@ public class UI {
 			}
 			System.out.println();
 		}
-
 		System.out.println("  a b c d e f g h");
 	}
 
@@ -85,7 +86,6 @@ public class UI {
 			}
 			System.out.println();
 		}
-
 		System.out.println("  a b c d e f g h");
 	}
 
@@ -106,10 +106,8 @@ public class UI {
 	}
 
 	private static void printCapturedPieces(List<ChessPiece> captured) {
-		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE)
-				.collect(Collectors.toList());
-		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK)
-				.collect(Collectors.toList());
+		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
+		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
 
 		System.out.println("Captured pieces:");
 		System.out.print("White: ");
