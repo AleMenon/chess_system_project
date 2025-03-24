@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import boardlayer.Board;
 import boardlayer.Piece;
 import boardlayer.Position;
-import chesslayer.pieces.Bishop;
 import chesslayer.pieces.King;
+import chesslayer.pieces.Knight;
 import chesslayer.pieces.Pawn;
 import chesslayer.pieces.Rook;
 
@@ -213,6 +213,6 @@ public class ChessMatch {
         placeNewPiece('d', 8, new King(board, Color.BLACK));
         placeNewPiece('d', 6, new Pawn(board, Color.BLACK));
         placeNewPiece('e', 6, new Pawn(board, Color.BLACK));   
-        placeNewPiece('c', 4, new Bishop(board, Color.BLACK));
+        placeNewPiece('c', 4, new Knight(board, Color.BLACK));
 	}
 }
