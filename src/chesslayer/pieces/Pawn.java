@@ -93,17 +93,22 @@ public class Pawn extends ChessPiece {
 
 			// Special move en passant
 			if (position.getRow() == 3) {
-				p.setValues(position.getRow(), position.getColumn() - 1);
-				if (getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
+				if(position.getColumn()>=0) {
+					p.setValues(position.getRow(), position.getColumn() - 1);					
+				}
+				if (chessMatch.getEnPassantVulnerable()!=null && getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
 					mat[p.getRow() - 1][p.getColumn()] = true;
 				}
 
-				p.setValues(position.getRow(), position.getColumn() + 1);
-				if (getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
+				if(position.getColumn()+1<8) {					
+					p.setValues(position.getRow(), position.getColumn() + 1);
+				}
+				if (chessMatch.getEnPassantVulnerable()!=null && getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
 					mat[p.getRow() - 1][p.getColumn()] = true;
 				}
 			}
-		} else {
+		} 
+		else {
 			// first move
 			if (isFirstMove()) {
 				p.setValues(position.getRow() + 2, position.getColumn());
@@ -129,13 +134,17 @@ public class Pawn extends ChessPiece {
 
 			// Special move en passant
 			if (position.getRow() == 4) {
-				p.setValues(position.getRow(), position.getColumn() + 1);
-				if (getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
+				if(position.getColumn()+1<8) {
+					p.setValues(position.getRow(), position.getColumn() + 1);					
+				}
+				if (chessMatch.getEnPassantVulnerable()!=null && getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
 					mat[p.getRow() + 1][p.getColumn()] = true;
 				}
 
-				p.setValues(position.getRow(), position.getColumn() - 1);
-				if (getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
+				if(position.getColumn()-1>=0) {
+					p.setValues(position.getRow(), position.getColumn() - 1);					
+				}
+				if (chessMatch.getEnPassantVulnerable()!=null && getBoard().piece(p) == chessMatch.getEnPassantVulnerable()) {
 					mat[p.getRow() + 1][p.getColumn()] = true;
 				}
 			}
