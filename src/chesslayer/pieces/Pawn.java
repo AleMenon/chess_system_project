@@ -7,7 +7,7 @@ import chesslayer.ChessPiece;
 import chesslayer.Color;
 
 public class Pawn extends ChessPiece {
-
+	
 	private boolean firstMove;
 	private ChessMatch chessMatch;
 
@@ -25,7 +25,8 @@ public class Pawn extends ChessPiece {
 	private boolean isFirstMove() {
 		if (getMoveCount() == 0) {
 			return firstMove;
-		} else {
+		} 
+		else {
 			firstMove = false;
 			return firstMove;
 		}
@@ -34,37 +35,26 @@ public class Pawn extends ChessPiece {
 	private boolean canMove(Position position) {
 		ChessPiece p = (ChessPiece) getBoard().piece(position);
 		if (getColor() == Color.WHITE) {
+			if ((this.position.getColumn() + 1 == position.getColumn() || this.position.getColumn() - 1 == position.getColumn()) && p != null && p.getColor() != getColor()) {
+				return true;
+			}
+			return this.position.getColumn() == position.getColumn() && (this.position.getRow() - 1 == position.getRow() || (this.position.getRow() - 2 == position.getRow() && isFirstMove() && getBoard().piece(position.getRow() + 1, position.getColumn()) == null)) && p == null;
+
+		} 
+		else {
 			if ((this.position.getColumn() + 1 == position.getColumn()
 					|| this.position.getColumn() - 1 == position.getColumn()) && p != null
 					&& p.getColor() != getColor()) {
 				return true;
 			}
-			return this.position.getColumn() == position.getColumn()
-					&& (this.position.getRow() - 1 == position.getRow()
-							|| (this.position.getRow() - 2 == position.getRow() && isFirstMove()
-									&& getBoard().piece(position.getRow() + 1, position.getColumn()) == null))
-					&& p == null;
-
-		} else {
-			if ((this.position.getColumn() + 1 == position.getColumn()
-					|| this.position.getColumn() - 1 == position.getColumn()) && p != null
-					&& p.getColor() != getColor()) {
-				return true;
-			}
-			return this.position.getColumn() == position.getColumn()
-					&& (this.position.getRow() + 1 == position.getRow()
-							|| (this.position.getRow() + 2 == position.getRow() && isFirstMove()
-									&& getBoard().piece(position.getRow() - 1, position.getColumn()) == null))
-					&& p == null;
-
+			return this.position.getColumn() == position.getColumn() && (this.position.getRow() + 1 == position.getRow() || (this.position.getRow() + 2 == position.getRow() && isFirstMove() && getBoard().piece(position.getRow() - 1, position.getColumn()) == null)) && p == null;
 		}
 	}
 
 	@Override
 	public boolean[][] possibleMoves() {
-		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
-
 		Position p = new Position(0, 0);
+		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
 		// white
 		if (getColor() == Color.WHITE) {
@@ -75,16 +65,19 @@ public class Pawn extends ChessPiece {
 					mat[p.getRow()][p.getColumn()] = true;
 				}
 			}
+			
 			// above
 			p.setValues(position.getRow() - 1, position.getColumn());
 			if (getBoard().positionExists(p) && canMove(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 			}
+			
 			// right above
 			p.setValues(position.getRow() - 1, position.getColumn() + 1);
 			if (getBoard().positionExists(p) && canMove(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 			}
+			
 			// left above
 			p.setValues(position.getRow() - 1, position.getColumn() - 1);
 			if (getBoard().positionExists(p) && canMove(p)) {
@@ -116,16 +109,19 @@ public class Pawn extends ChessPiece {
 					mat[p.getRow()][p.getColumn()] = true;
 				}
 			}
+			
 			// below
 			p.setValues(position.getRow() + 1, position.getColumn());
 			if (getBoard().positionExists(p) && canMove(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 			}
+			
 			// right below
 			p.setValues(position.getRow() + 1, position.getColumn() + 1);
 			if (getBoard().positionExists(p) && canMove(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 			}
+			
 			// left below
 			p.setValues(position.getRow() + 1, position.getColumn() - 1);
 			if (getBoard().positionExists(p) && canMove(p)) {
@@ -151,5 +147,4 @@ public class Pawn extends ChessPiece {
 		}
 		return mat;
 	}
-
 }
